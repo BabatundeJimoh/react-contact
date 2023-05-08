@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-export class AddUserContact extends Component {
+export class EditContactForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
-      number: "",
-      location: "",
+      name: props.contactInfo.name,
+      number: props.contactInfo.number,
+      location: props.contactInfo.location,
+      id: props.contactInfo.id,
     };
   }
 
@@ -21,13 +22,15 @@ export class AddUserContact extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.addContact(this.state);
+    this.props.editContact(this.state.id, this.state);
     console.log("form submit", this.state);
     this.setState({
       name: "",
       number: "",
       location: "",
     });
+
+    this.props.closeModal();
   };
 
   render() {
@@ -68,13 +71,11 @@ export class AddUserContact extends Component {
             />
           </Form.Group>
 
-          <Button variant="primary" type="submit" style={{ color: "white" }}>
-            Submit
-          </Button>
+          <Button variant="light">Submit</Button>
         </Form>
       </div>
     );
   }
 }
 
-export default AddUserContact;
+export default EditContactForm;
